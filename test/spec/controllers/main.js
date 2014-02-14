@@ -12,12 +12,12 @@ describe('Controller: todoController', function () {
     todoController = $controller('todoController');
   }));
 
-  // Ve schtart vit nuting!
+  // We start with nothing.
   it('the controller should have no items at this point', function () {
     expect(todoController.items.length).toBe(0);
   });
 
-  // Ve add vun.
+  // A task is added.
   it('should have one item now', function() {
     todoController.addItem({ description: 'a task'});
 
