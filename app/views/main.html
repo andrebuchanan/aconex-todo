@@ -11,20 +11,34 @@
   <div class="col-md-12">
     <form role="form" class="form-horizontal" name="newTask">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Task description" ng-model="description" tabindex="1" ng-keypress="$event.keyCode === 13 ? todoController.addItem(description) : null;">
+        <input type="text" class="form-control" placeholder="Task description" ng-model="todoController.description" tabindex="1" ng-keypress="$event.keyCode === 13 ? todoController.addItem(todoController.description) : null;">
         <div class="input-group-btn">
-          <button class="btn btn-primary" type="button" ng-click="todoController.addItem(description);">New Task</button>
+          <button class="btn btn-primary" type="button" ng-click="todoController.addItem(todoController.description);">New Task</button>
         </div>
       </div>
     </form>
   </div>
 </div>
 
-<div class="row">
+<p></p>
+
+<div class="row" ng-show="!todoController.items.length">
+  <div class="col-md-12">
+    <div class="alert alert-info">
+      You have no tasks. Create one by typing in the field above. Press Enter or click New Task when you're finished.
+    </div>
+  </div>
+</div>
+
+<div class="row" ng-show="todoController.items.length">
   <div class="col-md-12">
     <table class="table">
-      <tr ng-repeat="item in todoController.items | orderBy:timestamp:false">
-        <td ng-click="todoController.removeItem(item);">
+      <tr \>
+        <th>task</th>
+        <th>created</th>
+      </tr>
+      <tr ng-repeat="item in todoController.items | orderBy:timestamp:false" ng-click="todoController.setDone(item);" ng-class="{'bg-success': item.done}">
+        <td>
           {{item.description}}
         </td>
         <td>{{item.timestamp | date:'medium'}}</td>

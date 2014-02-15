@@ -53,4 +53,23 @@ describe('Controller: todoController', function () {
     });
   });
 
+  // Item manipulation.
+  describe('Changing Items', function()
+  {
+    var item = { description: 'a new hope'};
+    // We should be able to mark items as done.
+    it('should allow an item to be marked as done', function()
+    {
+      todoController.setDone(item);
+      expect(item.done).toBe(true);
+    });
+
+    it('should delete an item when asked to', function()
+    {
+      var newItem = todoController.addItem(item.description);
+      expect(todoController.items.length).toBe(1);
+      todoController.removeItem(newItem);
+      expect(todoController.items.length).toBe(0);
+    });
+  });
 });
