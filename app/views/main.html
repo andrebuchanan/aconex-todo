@@ -9,12 +9,12 @@
 
 <div class="row">
   <div class="col-md-12">
-    <form role="form" class="form-horizontal">
+    <form role="form" class="form-horizontal" name="newTask">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Task description" ng-model="item.description" tabindex="1">
-        <span class="input-group-btn">
-          <button class="btn btn-primary" type="button" ng-click="todoController.addItem(item);">New Task</button>
-        </span>
+        <input type="text" class="form-control" placeholder="Task description" ng-model="description" tabindex="1" ng-keypress="$event.keyCode === 13 ? todoController.addItem(description) : null;">
+        <div class="input-group-btn">
+          <button class="btn btn-primary" type="button" ng-click="todoController.addItem(description);">New Task</button>
+        </div>
       </div>
     </form>
   </div>
@@ -22,10 +22,17 @@
 
 <div class="row">
   <div class="col-md-12">
-    <div ng-repeat="item in todoController.items">{{item.description}}</div>
+    <table class="table">
+      <tr ng-repeat="item in todoController.items | orderBy:timestamp:false">
+        <td ng-click="todoController.removeItem(item);">
+          {{item.description}}
+        </td>
+        <td>{{item.timestamp | date:'medium'}}</td>
+      </tr>
+    </table>
   </div>
 </div>
 
 <div class="footer">
-  <p>So, are there many variations on the todo app that are actually useful?</p>
+  <p>Have coffee, full steam ahead!</p>
 </div>

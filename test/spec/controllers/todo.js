@@ -30,17 +30,26 @@ describe('Controller: todoController', function () {
     {
       expect(todoController.items.length).toBe(1);
     });
-
     // The task should have a description field.
     it('should have a description field for the newly inserted task', function()
     {
       expect(todoController.items[0].description).not.toBeUndefined();
     });
-
     // Newly added items should have a timestamp (localisation!).
     it('should have a current-ish timestamp field', function()
     {
       expect(todoController.items[0].timestamp).not.toBeUndefined();
+    });
+    // Newly added items should have a priority field.
+    it('should have a priority field', function()
+    {
+      expect(todoController.items[0].priority).not.toBeUndefined();
+    });
+    // New added items should have a done=false field.
+    it('should have a done field set to false', function()
+    {
+      expect(todoController.items[0].done).not.toBeUndefined();
+      expect(todoController.items[0].done).toBe(false);
     });
   });
 
