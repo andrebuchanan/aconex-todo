@@ -33,15 +33,27 @@
 <div class="row" ng-show="todoController.items.length">
   <div class="col-md-12">
     <table class="table">
-      <tr \>
+      <tr>
         <th>task</th>
         <th>created</th>
+        <th></th>
       </tr>
-      <tr ng-repeat="item in todoController.items | orderBy:timestamp:false" ng-click="todoController.setDone(item);" ng-class="{'bg-success': item.done}">
-        <td>
-          {{item.description}}
-        </td>
+      <tr ng-repeat="item in todoController.items|orderBy:['-priority','timestamp']" ng-class="{'success': item.done, warning: item.priority}" ng-mouseenter="item.hover=true;" ng-mouseleave="item.hover=false;">
+        <td>{{item.description}}</td>
         <td>{{item.timestamp | date:'medium'}}</td>
+        <td>
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-xs" ng-click="todoController.setDone(item);" ng-disabled="!item.hover">Done</button>
+            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" ng-disabled="!item.hover">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#" ng-click="todoController.removeItem(item);">Delete</a></li>
+              <li><a href="#" ng-click="todoController.adjustPriority(item, 1);">Important</a></li>
+              <li><a href="#" ng-click="todoController.adjustPriority(item, -1);">Less Important</a></li>
+            </ul>
+          </div>
+        </td>
       </tr>
     </table>
   </div>

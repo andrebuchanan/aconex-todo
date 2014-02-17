@@ -4,32 +4,43 @@ angular.module('aconexTodoApp')
   .controller('todoController', function (TaskItems) {
 
     // A place for our items to live.
-    this.items = TaskItems;
+    this.items = TaskItems.items;
 
     // Add a new item to the list of items.
     this.addItem = function(description)
     {
-      if (description.length < 3) return;
+      if (description.length < 3) {return;}
       var newItem = {
-        timestamp: new Date(),
+        timestamp: new Date(), // Get a sortable number.
         priority: 0,
         done: false,
         description: description
       };
-      this.items.push(newItem);
+      TaskItems.add(newItem);
       this.description = '';
+      // There is no real need to return this item, however, the testing
+      // framework needed new item context. I'm probably breaking some sort
+      // of golden rule here.
       return newItem;
     };
 
+    // We might ordinarily ask for confirmation before proceeding.
     // Remove an item.
     this.removeItem = function(item)
     {
-      this.items.splice(this.items.indexOf(item), 1);
+      TaskItems.remove(item);
     };
 
     // Mark item as done.
     this.setDone = function(item)
     {
       item.done = true;
+    };
+
+    // Adjust the priority of an item, relative to its current
+    // Priority.
+    this.adjustPriority = function(item, priority)
+    {
+      item.priority = 100;
     };
   });
