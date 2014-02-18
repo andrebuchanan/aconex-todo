@@ -6,7 +6,9 @@ angular.module('aconexTodoApp')
     // A place for our items to live.
     this.items = TaskItems.items;
     // Keep track of how many items are marked done.
-    this.doneItems = 0;
+    this.doneItems = TaskItems.doneItems;
+    // Task filter. Link it to a service for persistence across /#/ stuff.
+    this.tf = TaskItems.doneFilter;
 
     // Add a new item to the list of items.
     this.addItem = function(description)
@@ -31,15 +33,14 @@ angular.module('aconexTodoApp')
     this.removeItem = function(item)
     {
       TaskItems.remove(item);
-      // If item was done, subtract from done counter.
-      if (item.done) this.doneItems -= 1;
+      this.doneItems = TaskItems.doneItems;
     };
 
     // Mark item as done.
     this.setDone = function(item)
     {
-      item.done = true;
-      this.doneItems += 1;
+      TaskItems.setDone(item);
+      this.doneItems = TaskItems.doneItems;
     };
 
     // Adjust the priority of an item, relative to its current

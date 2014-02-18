@@ -1,8 +1,7 @@
 <div class="header">
   <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Home</a></li>
-    <li><a ng-href="#">About</a></li>
-    <li><a ng-href="#">Contact</a></li>
+    <li class="active" title="This nav link does nothing, but in theory might return to home page from another section of the application"><a ng-href="#">Home</a></li>
+    <li popover-placement="bottom" popover="A simple todo app" popover-trigger="mouseenter"><a ng-href="#">About</a></li>
   </ul>
   <h3 class="text-muted">ACONEX Todo</h3>
 </div>
@@ -38,11 +37,9 @@
 </div>
 
 <div class="row" ng-show="todoController.items.length">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <div class="btn-group">
-      <button class="btn btn-primary" btn-radio="false"
-        ng-model="todoController.tf.done" ng-init="todoController.tf.done=false;"
-      >
+      <button class="btn btn-primary" btn-radio="false" ng-model="todoController.tf.done">
         Outstanding Tasks
       </button>
       <button class="btn btn-primary" btn-radio="" ng-model="todoController.tf.done">
@@ -50,47 +47,45 @@
       </button>
     </div>
   </div>
+  <div class="col-md-6">
+    <strong class="well well-sm pull-right text-success">
+      Completed Items <span class="badge">{{todoController.doneItems}}</span>
+    </strong>
+  </div>
 </div>
 
 <p></p>
 
 <div class="row" ng-show="todoController.items.length">
   <div class="col-md-12">
-    <table class="table">
-      <tr>
-        <th>task</th>
-        <th>created</th>
-        <th></th>
-      </tr>
-      <tr ng-repeat="item in todoController.items|orderBy:['done','-priority','timestamp']|filter:todoController.tf"
-        ng-class="{'success': item.done, warning: item.priority > 0}"
-        ng-mouseenter="item.hover=true;"
-        ng-mouseleave="item.hover=false;"
-      >
-        <td ng-class="{'text-muted':item.done,'item-done':item.done}">
-          <span class="glyphicon glyphicon-ok" ng-show="item.done"></span>
-          <span class="glyphicon glyphicon-exclamation-sign" ng-show="item.priority"></span>
-          {{item.description}}
-        </td>
-        <td class="small text-muted">
-          {{item.timestamp | date:'medium'}}
-        </td>
-        <td>
-          <div class="btn-group pull-right">
-            <button type="button" class="btn btn-default btn-xs" ng-click="todoController.setDone(item);" title="Done">
-              <span class="glyphicon glyphicon-ok"></span>
-            </button>
-            <button type="button" class="btn btn-default btn-xs" ng-click="todoController.removeItem(item);" title="Delete">
-              <span class="glyphicon glyphicon-remove"></span>
-            </button>
-            <button type="button" class="btn btn-default btn-xs" ng-click="todoController.adjustPriority(item,true);"
-              ng-disabled="$first || item.done" title="Important">
-              <span class="glyphicon glyphicon glyphicon-exclamation-sign"></span>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </table>
+        <table class="table table-hover">
+          <tr ng-repeat="item in todoController.items|orderBy:['done','-priority','timestamp']|filter:todoController.tf"
+            ng-class="{'success': item.done, warning: item.priority > 0}"
+            ng-mouseenter="item.hover=true;"
+            ng-mouseleave="item.hover=false;"
+          >
+            <td ng-class="{'text-muted':item.done,'item-done':item.done}">
+              <span class="glyphicon glyphicon-ok" ng-show="item.done"></span>
+              <span class="glyphicon glyphicon-exclamation-sign" ng-show="item.priority"></span>
+              {{item.description}}
+            </td>
+            <td>
+              <div class="btn-group pull-right">
+                <button type="button" class="btn btn-default btn-xs" ng-click="todoController.setDone(item);" title="Done"
+                  ng-disabled="item.done">
+                  <span class="glyphicon glyphicon-ok"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-xs" ng-click="todoController.removeItem(item);" title="Delete">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-xs" ng-click="todoController.adjustPriority(item,true);"
+                  ng-disabled="item.done" title="Important">
+                  <span class="glyphicon glyphicon glyphicon-exclamation-sign"></span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </table>
   </div>
 </div>
 
