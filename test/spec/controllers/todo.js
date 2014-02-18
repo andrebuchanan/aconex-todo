@@ -56,7 +56,7 @@ describe('Controller: todoController', function () {
   // Item manipulation.
   describe('Changing Items', function()
   {
-    var item = { description: 'a new hope'};
+    var item = { description: 'a new hope', priority: 0 };
     // We should be able to mark items as done.
     it('should allow an item to be marked as done', function()
     {
@@ -70,6 +70,33 @@ describe('Controller: todoController', function () {
       expect(todoController.items.length).toBe(1);
       todoController.removeItem(newItem);
       expect(todoController.items.length).toBe(0);
+    });
+
+    it('should not set the priority below zero', function()
+    {
+      todoController.adjustPriority(item, -1);
+      expect(item.priority).toEqual(0);
+    });
+
+    it('should set priority to max + 1', function()
+    {
+      var item1 = todoController.addItem({ description: '1'});
+      var item2 = todoController.addItem({ description: '2'});
+
+      todoController.adjustPriority(item2, true);
+      // Zero + 1 = 1;
+      expect(item2.priority).toEqual(1);
+      todoController.adjustPriority(item1, true);
+      // Zero + max (1) + 1 = 2;
+      expect(item1.priority).toEqual(2);
+    });
+
+    it('should set priority to zero', function()
+    {
+      var item = { description: 'sleep!', priority: 100000000 };
+      // Oh no you don't!
+      todoController.adjustPriority(item, false);
+      expect(item.priority).toEqual(0);
     });
   });
 });

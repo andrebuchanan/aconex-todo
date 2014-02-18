@@ -32,10 +32,9 @@
 
 <div class="row" ng-show="todoController.items.length">
   <div class="col-md-12">
-    Visible tasks
     <div class="btn-group">
-      <button class="btn btn-default" btn-radio="false" ng-model="tf.done" ng-init="tf.done=false;">Outstanding</button>
-      <button class="btn btn-primary" btn-radio="" ng-model="tf.done">All</button>
+      <button class="btn btn-default" btn-radio="false" ng-model="tf.done" ng-init="tf.done=false;">Outstanding Tasks</button>
+      <button class="btn btn-primary" btn-radio="" ng-model="tf.done">All Tasks</button>
     </div>
   </div>
 </div>
@@ -49,11 +48,10 @@
         <th>task</th>
         <th>created</th>
         <th></th>
-        <th></th>
       </tr>
       <tr ng-repeat="item in todoController.items|orderBy:['done','-priority','timestamp']|filter:tf" ng-class="{'success': item.done, warning: item.priority > 0}" ng-mouseenter="item.hover=true;" ng-mouseleave="item.hover=false;">
-        <td><i ng-show="item.done" class="glyphicon glyphicon-ok"></i> {{item.description}}</td>
-        <td>{{item.timestamp | date:'medium'}}</td>
+        <td ng-class="{'text-muted':item.done,'item-done':item.done}"><i ng-show="item.done" class="glyphicon glyphicon-ok"></i> {{item.description}}</td>
+        <td class="small text-muted">{{item.timestamp | date:'medium'}}</td>
         <td>
           <div class="btn-group">
             <button type="button" class="btn btn-primary btn-xs" ng-click="todoController.setDone(item);" ng-disabled="!item.hover">Done</button>
@@ -66,12 +64,11 @@
               <li ng-hide="item.done" class="dropdown-header">Priority</li>
               <li ng-hide="item.done" ng-class="{disabled: $first}"><a href="#" ng-click="todoController.adjustPriority(item,true);">Most Important</a></li>
               <li ng-hide="item.done"><a href="#" ng-click="todoController.adjustPriority(item, 1);">Important</a></li>
-              <li ng-hide="item.done"><a href="#" ng-click="todoController.adjustPriority(item, -1);">Less Important</a></li>
-              <li ng-hide="item.done" ng-class="{disabled: $last}"><a href="#" ng-click="todoController.adjustPriority(item,false);">Least Important</a></li>
+              <li ng-hide="item.done" ng-class="{disabled: item.priority === 0}"><a href="#" ng-click="todoController.adjustPriority(item, -1);">Less Important</a></li>
+              <li ng-hide="item.done" ng-class="{disabled: $last}"><a href="#" ng-click="todoController.adjustPriority(item,false);">Not Important</a></li>
             </ul>
           </div>
         </td>
-        <td>{{$index}}</td>
       </tr>
     </table>
   </div>

@@ -3,10 +3,10 @@
 angular.module('aconexTodoApp')
   .controller('todoController', function (TaskItems) {
 
-    // Only show !done items by default.
-    this.taskDoneFilter = false;
     // A place for our items to live.
     this.items = TaskItems.items;
+    // Keep track of how many items are marked done.
+    this.doneItems = 0;
 
     // Add a new item to the list of items.
     this.addItem = function(description)
@@ -31,12 +31,15 @@ angular.module('aconexTodoApp')
     this.removeItem = function(item)
     {
       TaskItems.remove(item);
+      // If item was done, subtract from done counter.
+      if (item.done) this.doneItems -= 1;
     };
 
     // Mark item as done.
     this.setDone = function(item)
     {
       item.done = true;
+      this.doneItems += 1;
     };
 
     // Adjust the priority of an item, relative to its current
@@ -44,12 +47,19 @@ angular.module('aconexTodoApp')
     this.adjustPriority = function(item, priority)
     {
       // Need to use the service to make an item least or most important.
-      if (priority === true || priority === false)
+      if (priority === true)
       {
-        TaskItems.adjustPriority(item, priority);
+        TaskItems.makeHighest(item, priority);
         return;
       }
+      if (priority === false)
+      {
+        item.priority = 0;
+        return;
+      }
+
       // Otherwise just make a relative adjustment.
       item.priority += priority;
+      if (item.priority < 0) item.priority = 0;
     };
   });

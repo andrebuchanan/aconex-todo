@@ -12,25 +12,23 @@ angular.module('aconexTodoApp')
       {
         this.items.splice(this.items.indexOf(item), 1);
       },
-      adjustPriority: function(item, priority)
+      makeHighest: function(item, priority)
       {
-        var highest, lowest;
+        var highest;
         // Get highest and lowest priority.
         this.items.forEach(function(itm)
         {
           if (!highest) highest = item.priority;
-          if (!lowest) lowest = item.priority;
           if (itm.priority > highest) highest = itm.priority;
-          if (itm.priority < lowest) lowest = itm.priority;
         });
         // Priority true = make item most important.
         if (priority)
         {
-          item.priority = highest;
+          item.priority = highest + 1;
           return;
         }
         // Priority false = make item least important.
-        item.priority = lowest;
+        item.priority = 0;
       }
     };
   });
