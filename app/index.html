@@ -25,7 +25,102 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-view=""></div>
+    <div class="container" ng-controller="todoController as todo">
+      <div class="header">
+        <h3 class="text-muted">ACONEX Todo</h3>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form" class="form-horizontal" name="newTask">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Task description"
+                ng-model="todo.description" tabindex="1"
+                ng-keypress="$event.keyCode === 13 ? todo.addItem(todo.description) : null;"
+              >
+              <div class="input-group-btn">
+                <button class="btn btn-primary" type="button"
+                  ng-click="todo.addItem(todo.description);"
+                >
+                  New Task
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <p></p>
+
+      <div class="row" ng-show="!todo.items.length">
+        <div class="col-md-12">
+          <div class="alert alert-info">
+            You have no tasks. Create one by typing in the field above. Press Enter or click New Task when you're finished.
+          </div>
+        </div>
+      </div>
+
+      <div class="row" ng-show="todo.items.length">
+        <div class="col-md-6">
+          <div class="btn-group">
+            <button class="btn btn-primary" btn-radio="false" ng-model="todo.tf.done">
+              Outstanding Tasks
+            </button>
+            <button class="btn btn-primary" btn-radio="" ng-model="todo.tf.done">
+              All Tasks
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <strong class="well well-sm pull-right text-success">
+            Completed Items <span class="badge">{{todo.doneItems.count}}</span>
+          </strong>
+        </div>
+      </div>
+
+      <p></p>
+
+      <div class="row" ng-show="todo.items.length">
+        <div class="col-md-12">
+          <table class="table table-hover">
+            <tr ng-repeat="item in todo.items|orderBy:['done','-priority','timestamp']|filter:todo.tf"
+              ng-class="{'success': item.done, warning: item.priority > 0}"
+              ng-mouseenter="item.hover=true;"
+              ng-mouseleave="item.hover=false;"
+            >
+              <td ng-class="{'text-muted':item.done,'item-done':item.done}">
+                <span class="glyphicon glyphicon-ok" ng-show="item.done"></span>
+                <span class="glyphicon glyphicon-exclamation-sign" ng-show="item.priority"></span>
+                {{item.description}}
+              </td>
+              <td>
+                <div class="btn-group pull-right">
+                  <button type="button" class="btn btn-default btn-xs" ng-click="todo.setDone(item);" title="Done"
+                    ng-disabled="item.done">
+                    <span class="glyphicon glyphicon-ok"></span>
+                  </button>
+                  <button type="button" class="btn btn-default btn-xs" ng-click="todo.removeItem(item);" title="Delete">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                  <button type="button" class="btn btn-default btn-xs" ng-click="todo.adjustPriority(item);"
+                    ng-disabled="item.done" title="Important">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                  </button>
+                  <button type="button" class="btn btn-default btn-xs" ng-click="todo.adjustPriorityDown(item);"
+                    ng-disabled="item.priority === 0 || item.done" title="Not Important">
+                    <span class="glyphicon glyphicon-arrow-down"></span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>Have coffee, full steam ahead!</p>
+      </div>
+    </div>
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -45,10 +140,10 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/todo.js"></script>
-        <script src="scripts/services/todo.js"></script>
-        <!-- endbuild -->
-</body>
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/todo.js"></script>
+    <script src="scripts/services/todo.js"></script>
+    <!-- endbuild -->
+  </body>
 </html>
