@@ -13,8 +13,8 @@ New task entry is designed to be very quick, especially when the keyboard is use
 
 ## Approach
 
-The application brief specified several criteria, refer breif for details. In order to rapidly meet criteria I used yeoman
-scaffolding to quickly build a suitable framework. Via Yeoman I chose to utlise the following technologies in order to meet specified
+The application brief specified several criteria, refer breif for details. In order to rapidly meet criteria I used Yeoman
+scaffolding to quickly build a suitable framework. Via Yeoman I chose to utilise the following technologies in order to meet specified
 criteria:
 
 * AngularJS for core application structure and functionality
@@ -27,9 +27,9 @@ criteria:
 Once the framework was in place, I began by prototyping some basic structure. With that in place I built several unit tests
 and fleshed out functionity. This was my general approach as development proceeded.
 
-At some point I realised there were some requirement unique to the submission of this task, so I took a break and set 
-about implementing those; namely augmenting or disabling several scaffolded build related issues so the application
-could be run from a file, rather than web sever.
+At some point I realised there were requirements unique to the submission of this task, so I took a break and set 
+about implementing those; namely augmenting or disabling several scaffolded build related steps so the application
+could be run from a file, rather than a web sever / grunt serve.
 
 Once all functionality was finalised and the visual design in place, I began reviewing the code and the UI. During the
 code review I established there were several areas in need of improvement / refactor. I was not super happy with the
