@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aconexTodoApp')
-  .controller('todoController', function ($scope, TaskItems) {
+  .controller('todoController', function (TaskItems) {
 
     // A place for our items to live.
     this.items = TaskItems.items;
