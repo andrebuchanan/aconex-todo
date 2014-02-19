@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Aconex TODO</title>
+    <title>Aconex Todo</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -17,6 +17,7 @@
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/bootswatch.flatly.css">
     <!-- endbuild -->
   </head>
   <body ng-app="aconexTodoApp">
@@ -27,10 +28,10 @@
     <!-- Add your site or application content here -->
     <div class="container" ng-controller="todoController as todo">
       <div class="header">
-        <h3 class="text-muted">ACONEX Todo</h3>
+        <h3 class="text-muted">Aconex Todo</h3>
       </div>
 
-      <div class="row">
+      <div class="row task-entry">
         <div class="col-md-12">
           <form role="form" class="form-horizontal" name="newTask">
             <div class="input-group">
@@ -39,7 +40,7 @@
                 ng-keypress="$event.keyCode === 13 ? todo.addItem(todo.description) : null;"
               >
               <div class="input-group-btn">
-                <button class="btn btn-primary" type="button"
+                <button class="btn btn-primary" type="button" id="btnNewTask"
                   ng-click="todo.addItem(todo.description);"
                 >
                   New Task
