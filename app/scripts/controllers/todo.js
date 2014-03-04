@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aconexTodoApp')
-  .controller('todoController', function (TaskItems) {
+  .controller('todoController', function (TaskItems, $modal) {
 
     // A place for our items to live.
     this.items = TaskItems.items;
@@ -48,5 +48,34 @@ angular.module('aconexTodoApp')
     // Demote item to not important.
     this.adjustPriorityDown = function(item) {
       item.priority = 0;
+    };
+    // Share a task.
+    this.shareItem = function(task) {
+      this.modalInstance = $modal.open({
+        templateUrl: 'shareTaskDialog.html',
+        controller: 'ShareTaskCtrl as shareCtrl',
+        resolve: {
+          task: function() {
+            return task;
+          }
+        }
+      });
+
+      this.modalInstance.result.then(function(emailAddress) {
+        task.shares.push(emailAddress);
+        console.log(task.shares);
+      });
+    };
+  })
+  // Controller for modal
+  .controller('ShareTaskCtrl', function($modalInstance, task)
+  {
+    this.task = task;
+    this.shareItem = function() {
+      $modalInstance.close(this.shareEmail);
+    };
+
+    this.close = function() {
+      $modalInstance.close();
     };
   });

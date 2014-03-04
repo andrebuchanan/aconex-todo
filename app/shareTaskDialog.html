@@ -1,0 +1,8 @@
+<div class="modal-body">
+  <form ng-submit="$event.preventDefault(); shareCtrl.shareItem();">
+    <div class="form-group"><input ng-model="shareCtrl.shareEmail" type="email" class="form-control" placeholder="Email address"></div>
+    <div class="modal-footer">
+      <div class="btn btn-default" ng-click="shareCtrl.shareTask();"><span class="glyphicon glyphicon-share-alt"></span> Share</div>
+    </div>
+  </form>
+</div>

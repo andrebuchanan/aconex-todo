@@ -107,6 +107,10 @@
                     ng-disabled="item.done" title="Important">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>
                   </button>
+                  <button type="button" class="btn btn-default btn-xs" ng-click="todo.shareItem(item);"
+                    title="Share">
+                    <span class="glyphicon glyphicon-share-alt"></span>
+                  </button>
                   <button type="button" class="btn btn-default btn-xs" ng-click="todo.adjustPriorityDown(item);"
                     ng-disabled="item.priority === 0 || item.done" title="Not Important">
                     <span class="glyphicon glyphicon-arrow-down"></span>
@@ -130,7 +134,7 @@
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>

@@ -82,3 +82,45 @@ describe('Controller: todoController', function () {
     });
   });
 });
+
+describe('Controller: todoController modal', function () {
+
+  var todoController;
+
+  // load the controller's module
+  beforeEach(module('aconexTodoApp'));
+
+  beforeEach(inject(function($modal) {
+    spyOn($modal, 'open').andReturn(fakeModal);
+  }));
+
+  // Set up fake modal here.
+  var fakeModal = {
+    result: {
+      then: function(confCb, cancelCb) {
+          this.confCb = confCb;
+          this.cancelCb = cancelCb;
+        }
+    },
+    close: function(item) {
+      this.result.confCb(item);
+    },
+    dismiss: function(type) {
+      this.result.cancelCb(type);
+    }
+  };
+
+  // Initialize the controller
+  beforeEach(inject(function ($controller) {
+    todoController = $controller('todoController');
+  }));
+
+  it('should open a dialog and add an email address to a task', function() {
+    var task = { name: 'test', shares: [] };
+    todoController.shareItem(task);
+    todoController.modalInstance.close('email@example.com');
+    expect(task.shares.length).toEqual(1);
+    expect(task.shares[0]).toEqual('email@example.com');
+  });
+
+});

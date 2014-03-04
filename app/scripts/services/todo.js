@@ -12,7 +12,8 @@ angular.module('aconexTodoApp')
         var newItem = {
           timestamp: Date.now(), // Get a sortable number.
           priority: 0,
-          done: false
+          done: false,
+          shares: []
         };
         this.items.push(newItem);
         return newItem;
