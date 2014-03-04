@@ -98,9 +98,9 @@ describe('Controller: todoController modal', function () {
   var fakeModal = {
     result: {
       then: function(confCb, cancelCb) {
-          this.confCb = confCb;
-          this.cancelCb = cancelCb;
-        }
+        this.confCb = confCb;
+        this.cancelCb = cancelCb;
+      }
     },
     close: function(item) {
       this.result.confCb(item);
